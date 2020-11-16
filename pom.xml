@@ -5,15 +5,38 @@
 
 	<groupId>com.xdev-software</groupId>
 	<artifactId>biapi</artifactId>
-	<version>5.0.3</version>
+	<version>5.0.3-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>XDEV BI Suite</name>
+	<description>XDEV BI Suite</description>
+	<url>https://github.com/xdev-software/biapi</url>
+
+	<scm>
+		<url>https://github.com/xdev-software/biapi</url>
+		<connection>https://github.com/xdev-software/biapi.git</connection>
+	</scm>
+
+	<inceptionYear>2011</inceptionYear>
+
+	<organization>
+		<name>XDEV Software</name>
+		<url>https://xdev-software.de</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<name>XDEV Software</name>
+			<organization>XDEV Software</organization>
+			<url>https://www.xdev-software.de</url>
+		</developer>
+	</developers>
 
 	<licenses>
 		<license>
 			<name>GNU Lesser General Public License version 3</name>
 			<url>https://www.gnu.org/licenses/lgpl-3.0.en.html</url>
+			<distribution>repo</distribution>
 		</license>
 	</licenses>
 
@@ -24,11 +47,40 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
-	<organization>
-		<name>XDEV Software</name>
-		<url>https://xdev-software.com</url>
-	</organization>
-	<inceptionYear>2011</inceptionYear>
+	<repositories>
+		<!-- The order of definitions matters. Explicitly defining central here 
+			to make sure it has the highest priority. -->
+		<repository>
+			<id>central</id>
+			<url>https://repo.maven.apache.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<!-- The order of definitions matters. Explicitly defining central here 
+			to make sure it has the highest priority. -->
+		<pluginRepository>
+			<id>central</id>
+			<url>https://repo.maven.apache.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
 
 	<dependencies>
 		<dependency>
@@ -175,4 +227,49 @@
 		</plugins>
 	</build>
 
+	<profiles>
+		<profile>
+			<id>ossrh</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.6</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+								<configuration>
+									<!-- Fixes "gpg: signing failed: Inappropriate ioctl for device" -->
+									<!-- Prevent `gpg` from using pinentry programs -->
+									<gpgArguments>
+										<arg>--pinentry-mode</arg>
+										<arg>loopback</arg>
+									</gpgArguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<version>1.6.8</version>
+						<extensions>true</extensions>
+						<configuration>
+							<serverId>ossrh</serverId>
+							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+							<!-- Sometimes OSSRH is really slow -->
+							<stagingProgressTimeoutMinutes>30</stagingProgressTimeoutMinutes>
+							<autoReleaseAfterClose>true</autoReleaseAfterClose>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
