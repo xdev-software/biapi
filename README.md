@@ -1,3 +1,7 @@
+[![Build](https://img.shields.io/github/workflow/status/xdev-software/biapi/Master%20CI)](https://github.com/xdev-software/biapi/actions?query=workflow%3A%22Master+CI%22)
+[![Latest version](https://img.shields.io/maven-central/v/com.xdev-software/biapi)](https://mvnrepository.com/artifact/com.xdev-software/biapi)
+[![Build Develop](https://img.shields.io/github/workflow/status/xdev-software/biapi/Develop%20CI/develop?label=build%20develop)](https://github.com/xdev-software/biapi/actions?query=workflow%3A%22Develop+CI%22+branch%3Adevelop)
+[![javadoc](https://javadoc.io/badge2/com.xdev-software/biapi/javadoc.svg)](https://javadoc.io/doc/com.xdev-software/biapi) 
 
 # XDEV BI Suite (BIAPI)
 
