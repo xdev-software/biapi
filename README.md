@@ -42,4 +42,4 @@ If the ``develop`` is ready for release, create a pull request to the ``master``
 
 When the release is finished do the following:
 * Merge the auto-generated PR (with the incremented version number) back into the ``develop``
-* Add the release notes to the [GitHub release](https://github.com/xdev-software/xapi/releases/latest)
+* Add the release notes to the [GitHub release](https://github.com/xdev-software/biapi/releases/latest)
