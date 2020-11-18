@@ -5,7 +5,7 @@ Java Swing provides a significant set of controls for developing graphical user 
 
 The XDEV **B**usiness **I**nteligence Suite provides you ultimate power features, which extremely upgrades your application and makes it multiple times more capable and comfortable. Extend your solutions with features your users only dream about yet. Best of all - the integrations is amazingly easy!
 
-Before version 5.0.3, BIAPI was distributed as commercial software. To provide this framework as open-source, we split it into two parts: the open-source part you see here and the commercial part, which requires a license. If you want to use the commercial BIAPI with third-party dependencies, please contact us at [info@xdev-software.de]
+Before version 5.0.3, BIAPI was distributed as commercial software. To provide this framework as open-source, we split it into two parts: the open-source part you see here and the commercial part, which requires a license. If you want to use the commercial BIAPI with third-party dependencies, please contact us at info@xdev-software.de
 
 
 ## XDEV-IDE
