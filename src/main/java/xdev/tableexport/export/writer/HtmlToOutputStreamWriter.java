@@ -26,10 +26,9 @@ package xdev.tableexport.export.writer;
 import java.io.OutputStream;
 
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.export.JRHtmlExporter;
+import net.sf.jasperreports.engine.export.HtmlExporter;
 
 
 /**
@@ -65,18 +64,18 @@ public class HtmlToOutputStreamWriter implements ExportWriter
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void write(JasperPrint jasperPrint) throws ExportWriterException
+	public void write(final JasperPrint jasperPrint) throws ExportWriterException
 	{
 		try
 		{
-			final JRExporter exporter = new JRHtmlExporter();
+			final HtmlExporter exporter = new  HtmlExporter();
 			
 			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM,this.outputStream);
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT,jasperPrint);
 			exporter.exportReport();
 			
 		}
-		catch(JRException e)
+		catch(final JRException e)
 		{
 			throw new ExportWriterException(e);
 		}
