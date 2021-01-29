@@ -33,13 +33,12 @@ import java.util.Map;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.HtmlExporter;
 import net.sf.jasperreports.engine.export.JRCsvExporter;
-import net.sf.jasperreports.engine.export.JRHtmlExporter;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
@@ -49,7 +48,12 @@ import net.sf.jasperreports.engine.export.JRTextExporterParameter;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.export.JRXmlExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JRViewer;
+import net.sf.jasperreports.export.SimpleHtmlExporterOutput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.export.SimpleWriterExporterOutput;
+import net.sf.jasperreports.export.SimpleXmlExporterOutput;
+import net.sf.jasperreports.export.parameters.ParametersExporterInput;
+import net.sf.jasperreports.swing.JRViewer;
 import net.sf.jasperreports.view.JasperViewer;
 import xdev.io.IOUtils;
 import xdev.lang.NotNull;
@@ -145,12 +149,12 @@ public class ReportBuilder
 				final InputStream inputStream = IOUtils.findResource(reportLocation);
 				loadedReport = (JasperReport)JRLoader.loadObject(inputStream);
 			}
-			catch(FileNotFoundException e)
+			catch(final FileNotFoundException e)
 			{
 				// fallback try to find report file with jasper api
 				loadedReport = (JasperReport)JRLoader.loadObjectFromFile(reportLocation);
 			}
-			catch(IOException e)
+			catch(final IOException e)
 			{
 				throw new JRException(e);
 			}
@@ -220,12 +224,12 @@ public class ReportBuilder
 						.getAbsolutePath());
 				loadedReport = (JasperReport)JRLoader.loadObject(inputStream);
 			}
-			catch(FileNotFoundException e)
+			catch(final FileNotFoundException e)
 			{
 				// fallback try to find report file with jasper api
 				loadedReport = (JasperReport)JRLoader.loadObject(reportLocation);
 			}
-			catch(IOException e)
+			catch(final IOException e)
 			{
 				throw new JRException(e);
 			}
@@ -415,29 +419,7 @@ public class ReportBuilder
 	}
 	
 	
-	/**
-	 * Writes this {@link ReportBuilder} to the provided {@link JRExporter}.
-	 * 
-	 * @param out
-	 *            {@link OutputStream} to write to.
-	 * @param exporter
-	 *            the used exporter
-	 * @throws JRException
-	 *             if a problem occurs while writing the report.
-	 */
-	public void writeReport(final OutputStream out, final JRExporter exporter) throws JRException
-	{
-		this.exportReport(out,exporter);
-	}
 	
-	
-	protected void exportReport(final OutputStream out, final JRExporter exporter)
-			throws JRException
-	{
-		exporter.setParameter(JRExporterParameter.OUTPUT_STREAM,out);
-		exporter.setParameter(JRExporterParameter.JASPER_PRINT,this.getJasperPrint());
-		exporter.exportReport();
-	}
 	
 	
 	/**
@@ -451,8 +433,15 @@ public class ReportBuilder
 	 */
 	public void writePdfFile(final OutputStream out) throws JRException
 	{
-		final JRExporter exporter = new JRPdfExporter();
-		this.exportReport(out,exporter);
+		final JRPdfExporter exporter = new JRPdfExporter();
+		final Map<JRExporterParameter, Object> parameters = new HashMap<>();
+		parameters.put(JRExporterParameter.JASPER_PRINT, this.getJasperPrint());
+		final ParametersExporterInput exporterInput = new ParametersExporterInput(this.parameters);
+		
+		exporter.setExporterInput(exporterInput);
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(out));
+		
+		exporter.exportReport();
 	}
 	
 	
@@ -467,8 +456,15 @@ public class ReportBuilder
 	 */
 	public void writeHtmlFile(final OutputStream out) throws JRException
 	{
-		final JRExporter exporter = new JRHtmlExporter();
-		this.exportReport(out,exporter);
+		final HtmlExporter exporter = new HtmlExporter();
+		final Map<JRExporterParameter, Object> parameters = new HashMap<>();
+		parameters.put(JRExporterParameter.JASPER_PRINT, this.getJasperPrint());
+		final ParametersExporterInput exporterInput = new ParametersExporterInput(this.parameters);
+		
+		exporter.setExporterInput(exporterInput);
+		exporter.setExporterOutput(new SimpleHtmlExporterOutput(out));
+		
+		exporter.exportReport();
 	}
 	
 	
@@ -483,8 +479,15 @@ public class ReportBuilder
 	 */
 	public void writeExcelFile(final OutputStream out) throws JRException
 	{
-		final JRExporter exporter = new JRXlsExporter();
-		this.exportReport(out,exporter);
+		final JRXlsExporter exporter = new JRXlsExporter();
+		final Map<JRExporterParameter, Object> parameters = new HashMap<>();
+		parameters.put(JRExporterParameter.JASPER_PRINT, this.getJasperPrint());
+		final ParametersExporterInput exporterInput = new ParametersExporterInput(this.parameters);
+		
+		exporter.setExporterInput(exporterInput);
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(out));
+		
+		exporter.exportReport();
 	}
 	
 	
@@ -499,8 +502,15 @@ public class ReportBuilder
 	 */
 	public void writeRtfFile(final OutputStream out) throws JRException
 	{
-		final JRExporter exporter = new JRRtfExporter();
-		this.exportReport(out,exporter);
+		final JRRtfExporter exporter = new JRRtfExporter();
+		final Map<JRExporterParameter, Object> parameters = new HashMap<>();
+		parameters.put(JRExporterParameter.JASPER_PRINT, this.getJasperPrint());
+		final ParametersExporterInput exporterInput = new ParametersExporterInput(this.parameters);
+		
+		exporter.setExporterInput(exporterInput);
+		exporter.setExporterOutput(new SimpleWriterExporterOutput(out));
+		
+		exporter.exportReport();
 	}
 	
 	
@@ -515,8 +525,15 @@ public class ReportBuilder
 	 */
 	public void writeCsvFile(final OutputStream out) throws JRException
 	{
-		final JRExporter exporter = new JRCsvExporter();
-		this.exportReport(out,exporter);
+		final JRCsvExporter exporter = new JRCsvExporter();
+		final Map<JRExporterParameter, Object> parameters = new HashMap<>();
+		parameters.put(JRExporterParameter.JASPER_PRINT, this.getJasperPrint());
+		final ParametersExporterInput exporterInput = new ParametersExporterInput(this.parameters);
+		
+		exporter.setExporterInput(exporterInput);
+		exporter.setExporterOutput(new SimpleWriterExporterOutput(out));
+		
+		exporter.exportReport();
 	}
 	
 	
@@ -531,8 +548,15 @@ public class ReportBuilder
 	 */
 	public void writeXmlFile(final OutputStream out) throws JRException
 	{
-		final JRExporter exporter = new JRXmlExporter();
-		this.exportReport(out,exporter);
+		final JRXmlExporter exporter = new JRXmlExporter();
+		final Map<JRExporterParameter, Object> parameters = new HashMap<>();
+		parameters.put(JRExporterParameter.JASPER_PRINT, this.getJasperPrint());
+		final ParametersExporterInput exporterInput = new ParametersExporterInput(this.parameters);
+		
+		exporter.setExporterInput(exporterInput);
+		exporter.setExporterOutput(new SimpleXmlExporterOutput(out));
+		
+		exporter.exportReport();
 	}
 	
 	
@@ -549,7 +573,7 @@ public class ReportBuilder
 	 */
 	public void writeTextFile(final OutputStream out) throws JRException
 	{
-		writeTextFile(out,80,30);
+		this.writeTextFile(out,80,30);
 	}
 	
 	
@@ -570,29 +594,39 @@ public class ReportBuilder
 	public void writeTextFile(final OutputStream out, final int pageWidth, final int pageHeight)
 			throws JRException
 	{
-		final JRExporter exporter = new JRTextExporter();
-		exporter.setParameter(JRTextExporterParameter.PAGE_WIDTH,pageWidth);
-		exporter.setParameter(JRTextExporterParameter.PAGE_HEIGHT,pageHeight);
-		this.exportReport(out,exporter);
+		
+		final JRTextExporter exporter = new JRTextExporter();
+		
+		final Map<JRExporterParameter, Object> parameters = new HashMap<>();
+		parameters.put(JRExporterParameter.JASPER_PRINT, this.getJasperPrint());
+		parameters.put(JRTextExporterParameter.PAGE_WIDTH,pageWidth);
+		parameters.put(JRTextExporterParameter.PAGE_HEIGHT,pageHeight);
+		
+		final ParametersExporterInput exporterInput = new ParametersExporterInput(this.parameters);
+		
+		exporter.setExporterInput(exporterInput);
+		exporter.setExporterOutput(new SimpleWriterExporterOutput(out));
+		
+		exporter.exportReport();
 	}
 	
 	
 	public void print() throws JRException
 	{
-		print(false,false);
+		this.print(false,false);
 	}
 	
 	
-	public void print(boolean displayPageDialog, boolean displayPrintDialog) throws JRException
+	public void print(final boolean displayPageDialog, final boolean displayPrintDialog) throws JRException
 	{
-		print(displayPageDialog,false,displayPrintDialog,false);
+		this.print(displayPageDialog,false,displayPrintDialog,false);
 	}
 	
 	
-	public void print(boolean displayPageDialog, boolean displayPageDialogOnlyOnce,
-			boolean displayPrintDialog, boolean displayPrintDialogOnlyOnce) throws JRException
+	public void print(final boolean displayPageDialog, final boolean displayPageDialogOnlyOnce,
+			final boolean displayPrintDialog, final boolean displayPrintDialogOnlyOnce) throws JRException
 	{
-		JRPrintServiceExporter exporter = new JRPrintServiceExporter();
+		final JRPrintServiceExporter exporter = new JRPrintServiceExporter();
 		exporter.setParameter(JRExporterParameter.JASPER_PRINT,this.getJasperPrint());
 		exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PAGE_DIALOG,displayPageDialog);
 		exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PAGE_DIALOG_ONLY_ONCE,
@@ -631,6 +665,6 @@ public class ReportBuilder
 	 */
 	protected Map getParameters()
 	{
-		return parameters;
+		return this.parameters;
 	}
 }

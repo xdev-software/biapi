@@ -26,6 +26,7 @@ package xdev.reports.jasper;
 import net.sf.jasperreports.engine.JRField;
 import net.sf.jasperreports.engine.JRPropertiesHolder;
 import net.sf.jasperreports.engine.JRPropertiesMap;
+import net.sf.jasperreports.engine.JRPropertyExpression;
 
 
 public class JRMappedField implements JRField
@@ -33,12 +34,14 @@ public class JRMappedField implements JRField
 	
 	private final String	name;
 	private final JRField	wrappedField;
+	private final JRPropertyExpression[] propertyExperession;
 	
 
-	public JRMappedField(final JRField jrField, final String name)
+	public JRMappedField(final JRField jrField, final String name,final JRPropertyExpression[] propertyExperession)
 	{
 		this.name = name;
 		this.wrappedField = jrField;
+		this.propertyExperession = propertyExperession;
 	}
 	
 
@@ -71,7 +74,7 @@ public class JRMappedField implements JRField
 	
 
 	@Override
-	public void setDescription(String arg0)
+	public void setDescription(final String arg0)
 	{
 		this.wrappedField.setDescription(arg0);
 	}
@@ -98,9 +101,17 @@ public class JRMappedField implements JRField
 	}
 	
 
+	@Override
 	public Object clone()
 	{
 		return this.wrappedField.clone();
+	}
+
+
+	@Override
+	public JRPropertyExpression[] getPropertyExpressions()
+	{
+		return this.propertyExperession;
 	}
 	
 }
