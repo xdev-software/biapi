@@ -61,13 +61,13 @@ public class JRDataSourceMapper implements JRDataSource
 	
 	@Override
 	public Object getFieldValue(@NotNull final JRField jrField) throws JRException
-	{		
-		String mappedName = this.fieldMapping.get(jrField.getName());
+	{
+		final String mappedName = this.fieldMapping.get(jrField.getName());
 		
 		JRField field = jrField;
 		if(mappedName != null)
 		{
-			field = new JRMappedField(jrField,mappedName);
+			field = new JRMappedField(jrField,mappedName,jrField.getPropertyExpressions());
 		}
 		
 		return this.wrappedDataSource.getFieldValue(field);

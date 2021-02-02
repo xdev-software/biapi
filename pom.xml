@@ -5,7 +5,7 @@
 
 	<groupId>com.xdev-software</groupId>
 	<artifactId>biapi</artifactId>
-	<version>5.0.4-SNAPSHOT</version>
+	<version>5.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>XDEV BI Suite</name>
@@ -93,7 +93,7 @@
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
-			<version>6.3.0</version>
+			<version>6.16.0</version>
 		</dependency>
 	</dependencies>
 
