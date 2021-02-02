@@ -23,7 +23,7 @@ package xdev.tableexport.config;
  */
 
 
-import net.sf.jasperreports.engine.type.HorizontalAlignEnum;
+import net.sf.jasperreports.engine.type.HorizontalTextAlignEnum;
 
 /**
  * Alignment of the content.
@@ -36,35 +36,35 @@ public enum ColumnAlignment
 	 * Indicates that the content is left aligned in the column.
 	 *
 	 */
-	LEFT(HorizontalAlignEnum.LEFT),
+	LEFT(HorizontalTextAlignEnum.LEFT),
 
 	/**
 	 * Indicates that the content is centered in the column.
 	 *
 	 */
-	CENTER(HorizontalAlignEnum.CENTER),
+	CENTER(HorizontalTextAlignEnum.CENTER),
 
 	/**
 	 * Indicates that the content is right aligned in the column.
 	 *
 	 */
-	RIGHT(HorizontalAlignEnum.RIGHT);
+	RIGHT(HorizontalTextAlignEnum.RIGHT);
 	
-	private HorizontalAlignEnum	horizontalAlignment;
+	private HorizontalTextAlignEnum	horizontalAlignment;
 	
 
-	private ColumnAlignment(HorizontalAlignEnum horizontalAlignment)
+	private ColumnAlignment(final HorizontalTextAlignEnum horizontalAlignment)
 	{
 		this.horizontalAlignment = horizontalAlignment;
 	}
 	
 
 	/**
-	 * Return the mapped {@link HorizontalAlignEnum}.
+	 * Return the mapped {@link HorizontalTextAlignEnum}.
 	 * 
-	 * @return the {@link HorizontalAlignEnum}
+	 * @return the {@link HorizontalTextAlignEnum}
 	 */
-	public HorizontalAlignEnum getHorizontalAlignEnum()
+	public HorizontalTextAlignEnum getHorizontalTextAlignEnum()
 	{
 		return this.horizontalAlignment;
 	}

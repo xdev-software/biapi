@@ -49,7 +49,7 @@ public class ExportUtils
 	/**
 	 * Prepare the {@code exporter} with all required {@link JRExporterParameter}.
 	 * 
-	 * @param exporter 
+	 * @param exporter
 	 * 
 	 * @param jasperPrint An instance of the {@link JasperPrint} represents a report document that can be exported to other formats.
 	 * 
@@ -71,7 +71,7 @@ public class ExportUtils
 	/**
 	 * Prepare the {@code exporter} with all required {@link JRExporterParameter}.
 	 * 
-	 * @param exporter 
+	 * @param exporter
 	 * 
 	 * @param jasperPrint An instance of the {@link JasperPrint} represents a report document that can be exported to other formats.
 	 * 
@@ -111,9 +111,9 @@ public class ExportUtils
 		
 		if(freezeHeadline)
 		{
-			JRPropertiesUtil util = JRPropertiesUtil
+			final JRPropertiesUtil util = JRPropertiesUtil
 					.getInstance(exporter.getJasperReportsContext());
-			util.setProperty(JRXlsAbstractExporter.PROPERTY_FREEZE_ROW,"2");
+			util.setProperty(JRXlsAbstractExporter.PROPERTY_FREEZE_ROW_EDGE,"2");
 		}
 	}
 }
