@@ -38,7 +38,9 @@ The XDEV BIAPI is released under [GNU Lesser General Public License version 3](h
 View the [summary of all dependencies online](https://xdev-software.github.io/biapi/dependencies/)
 
 ## Releasing
-If the ``develop`` is ready for release, create a pull request to the ``master``-Branch and merge the changes
+Consider doing a [test-deployment](https://github.com/xdev-software/biapi/actions/workflows/test-deploy.yml?query=branch%3Adevelop) before actually releasing.
+
+If the ``develop`` is ready for release, create a pull request to the ``master``-Branch and merge the changes.
 
 When the release is finished do the following:
 * Merge the auto-generated PR (with the incremented version number) back into the ``develop``
