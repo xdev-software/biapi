@@ -1,6 +1,5 @@
-[![Build](https://img.shields.io/github/workflow/status/xdev-software/biapi/Master%20CI)](https://github.com/xdev-software/biapi/actions?query=workflow%3A%22Master+CI%22)
 [![Latest version](https://img.shields.io/maven-central/v/com.xdev-software/biapi)](https://mvnrepository.com/artifact/com.xdev-software/biapi)
-[![Build Develop](https://img.shields.io/github/workflow/status/xdev-software/biapi/Develop%20CI/develop?label=build%20develop)](https://github.com/xdev-software/biapi/actions?query=workflow%3A%22Develop+CI%22+branch%3Adevelop)
+[![Build](https://img.shields.io/github/workflow/status/xdev-software/biapi/Check%20Build/develop)](https://github.com/xdev-software/biapi/actions/workflows/checkBuild.yml?query=branch%3Adevelop)
 [![javadoc](https://javadoc.io/badge2/com.xdev-software/biapi/javadoc.svg)](https://javadoc.io/doc/com.xdev-software/biapi) 
 
 # XDEV BI Suite (BIAPI)
@@ -37,7 +36,7 @@ We encourage you to read the [contribution instructions by GitHub](https://guide
 The XDEV BIAPI is released under [GNU Lesser General Public License version 3](https://www.gnu.org/licenses/lgpl-3.0.en.html) aka LGPL 3
 View the [summary of all dependencies online](https://xdev-software.github.io/biapi/dependencies/)
 
-## Releasing
+## Releasing [![Build](https://img.shields.io/github/workflow/status/xdev-software/biapi/Release?label=Release)](https://github.com/xdev-software/biapi/actions/workflows/release.yml)
 Consider doing a [test-deployment](https://github.com/xdev-software/biapi/actions/workflows/test-deploy.yml?query=branch%3Adevelop) before actually releasing.
 
 If the ``develop`` is ready for release, create a pull request to the ``master``-Branch and merge the changes.
