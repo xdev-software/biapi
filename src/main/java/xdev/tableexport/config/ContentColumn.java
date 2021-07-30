@@ -51,7 +51,7 @@ public class ContentColumn extends AbstractColumn
 
 	/**
 	 * Return the column pattern of this {@link ContentColumn}.
-	 * @return 
+	 * @return the column pattern of this {@link ContentColumn}.
 	 * 
 	 * @see #setProperty(String)
 	 */
