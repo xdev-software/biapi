@@ -296,6 +296,12 @@
 									<goal>shade</goal>
 								</goals>
 								<configuration>
+									<artifactSet>
+										<excludes>
+											<!-- XDEV IDE does not need xapi in the fat jar -->
+											<exclude>com.xdev-software:xapi</exclude>
+										</excludes>
+									</artifactSet>
 									<filters>
 										<filter>
 											<artifact>*:*</artifact>
