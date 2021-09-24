@@ -5,7 +5,7 @@
 
 	<groupId>com.xdev-software</groupId>
 	<artifactId>biapi</artifactId>
-	<version>5.1.2-SNAPSHOT</version>
+	<version>6.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>XDEV BI Suite</name>
@@ -86,7 +86,7 @@
 		<dependency>
 			<groupId>com.xdev-software</groupId>
 			<artifactId>xapi</artifactId>
-			<version>5.0.3</version>
+			<version>6.0.0</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
@@ -153,7 +153,7 @@
 				<executions>
 					<execution>
 						<id>attach-sources</id>
-						<phase>verify</phase>
+						<phase>package</phase>
 						<goals>
 							<goal>jar-no-fork</goal>
 						</goals>
@@ -163,7 +163,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-enforcer-plugin</artifactId>
-				<version>3.0.0-M3</version>
+				<version>3.0.0</version>
 				<executions>
 					<execution>
 						<id>enforce-maven</id>
@@ -209,7 +209,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.3.0</version>
+				<version>3.3.1</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -224,10 +224,150 @@
 					<doclint>none</doclint>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.1.2</version>
+
+				<dependencies>
+					<dependency>
+						<groupId>com.puppycrawl.tools</groupId>
+						<artifactId>checkstyle</artifactId>
+						<version>8.44</version>
+					</dependency>
+				</dependencies>
+
+				<configuration>
+					<configLocation>checkstyle.xml</configLocation>
+					<encoding>UTF-8</encoding>
+					<consoleOutput>true</consoleOutput>
+					<failsOnError>true</failsOnError>
+					<linkXRef>false</linkXRef>
+					<failOnViolation>true</failOnViolation>
+				</configuration>
+				<executions>
+					<execution>
+						<id>validate</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<!-- version is intentional not up-to-date. There is a bug in 3.2.0 see 
+					https://issues.apache.org/jira/browse/MDEP-757 -->
+				<version>3.2.0</version>
+				<executions>
+					<execution>
+						<id>analyze</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>analyze-only</goal>
+						</goals>
+						<configuration>
+							<failOnWarning>true</failOnWarning>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
+
 	</build>
 
 	<profiles>
+
+		<profile>
+			<id>xdev-ide</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-shade-plugin</artifactId>
+						<version>3.2.4</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>shade</goal>
+								</goals>
+								<configuration>
+									<artifactSet>
+										<excludes>
+											<!-- XDEV IDE does not need xapi in the fat jar -->
+											<exclude>com.xdev-software:xapi</exclude>
+										</excludes>
+									</artifactSet>
+									<filters>
+										<filter>
+											<artifact>*:*</artifact>
+											<excludes>
+												<exclude>module-info.class</exclude>
+												<exclude>META-INF/*.SF</exclude>
+												<exclude>META-INF/*.DSA</exclude>
+												<exclude>META-INF/*.RSA</exclude>
+												<exclude>MANIFEST.MF</exclude>
+											</excludes>
+										</filter>
+									</filters>
+
+									<createSourcesJar>true</createSourcesJar>
+									<transformers>
+
+										<!-- we don't include the MANIFEST.MF files from other jar to avoid 
+											them from overriding ours -->
+										<transformer
+											implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
+											<resource>MANIFEST.MF</resource>
+										</transformer>
+
+										<!-- make sure Apache Licenses files are not overridden. -->
+										<transformer
+											implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer">
+
+										</transformer>
+
+										<!-- make sure Apache NOTICE files are not overridden. -->
+										<transformer
+											implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer">
+											<addHeader>false</addHeader>
+										</transformer>
+
+										<!-- append overlapping files -->
+										<transformer
+											implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+											<resource>META-INF/LICENSE.APACHE2</resource>
+										</transformer>
+
+										<!-- append overlapping files -->
+										<transformer
+											implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+											<resource>overview.html</resource>
+										</transformer>
+
+										<!-- adding some infos to the MANIFEST.MF -->
+										<transformer
+											implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+											<manifestEntries>
+												<X-Compile-Source-JDK>${maven.compiler.source}</X-Compile-Source-JDK>
+												<X-Compile-Target-JDK>${maven.compiler.target}</X-Compile-Target-JDK>
+											</manifestEntries>
+										</transformer>
+
+									</transformers>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
+
 		<profile>
 			<id>ossrh</id>
 			<build>
@@ -254,7 +394,7 @@
 							</execution>
 						</executions>
 					</plugin>
-					
+
 					<plugin>
 						<groupId>org.sonatype.plugins</groupId>
 						<artifactId>nexus-staging-maven-plugin</artifactId>

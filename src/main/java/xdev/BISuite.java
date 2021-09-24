@@ -37,7 +37,7 @@ public class BISuite implements Extension
 	/**
 	 * Current version of the bi suite.
 	 */
-	public final static Version		VERSION					= new Version(5,0,3,0);
+	public final static Version		VERSION					= new Version(6,0,0,0);
 	
 	/**
 	 * X-API version required for the current version of the bi suite.
@@ -53,7 +53,7 @@ public class BISuite implements Extension
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void init(Map<String, String> args) throws ExtensionInitializationException
+	public void init(final Map<String, String> args) throws ExtensionInitializationException
 	{
 		// Version check
 		if(xdev.API.VERSION.isOlderThan(REQUIRED_XAPI_VERSION))

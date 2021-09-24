@@ -72,7 +72,7 @@ public class XdevTableDataSource<T extends JTable & VirtualTableEditor> implemen
 	 * {@link XdevTable}
 	 * 
 	 * @param table
-	 *            the {@link T} to wrap
+	 *            the T to wrap
 	 */
 	public XdevTableDataSource(@NotNull final T table)
 	{
