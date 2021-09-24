@@ -30,7 +30,7 @@ Mail: opensource@xdev-software.de
 We encourage you to read the [contribution instructions by GitHub](https://guides.github.com/activities/contributing-to-open-source/#contributing) also.
 
 ## Dependencies and Licenses
-The XDEV BIAPI is released under [GNU Lesser General Public License version 3](https://www.gnu.org/licenses/lgpl-3.0.en.html) aka LGPL 3
+The XDEV BIAPI is released under [GNU Lesser General Public License version 3](https://www.gnu.org/licenses/lgpl-3.0.en.html) aka LGPL 3<br/>
 View the [summary of all dependencies online](https://xdev-software.github.io/biapi/dependencies/)
 
 ## Releasing [![Build](https://img.shields.io/github/workflow/status/xdev-software/biapi/Release?label=Release)](https://github.com/xdev-software/biapi/actions/workflows/release.yml)
