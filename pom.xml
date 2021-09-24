@@ -5,7 +5,7 @@
 
 	<groupId>com.xdev-software</groupId>
 	<artifactId>biapi</artifactId>
-	<version>6.0.0</version>
+	<version>6.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>XDEV BI Suite</name>
