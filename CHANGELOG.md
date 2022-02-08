@@ -1,5 +1,5 @@
 ## 6.0.1
-* Update xapi to ``6.0.1``
+* Updated xapi to ``6.0.1``
 
 ## 6.0.0
 * Ensured build compatibility with Java 8, 11 and 17
