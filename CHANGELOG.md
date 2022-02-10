@@ -1,3 +1,8 @@
+## 6.0.1
+* Updated xapi to ``6.0.1``
+* Updated jasperreports to ``6.18.1``
+* Updated maven plugins
+
 ## 6.0.0
 * Ensured build compatibility with Java 8, 11 and 17
 * Minor code improvements, mostly for tests
